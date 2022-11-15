@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Materials/Cursor.material" type="Material" id=1]
+[ext_resource path="res://Cursor.gd" type="Script" id=2]
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 1, 1, 1 )
+
+[node name="Cursor" type="Spatial"]
+script = ExtResource( 2 )
+valid_color = Color( 0, 1, 0, 0.352941 )
+invalid_color = Color( 0.694118, 0.768627, 0.160784, 0.352941 )
+
+[node name="MeshPivot" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="CursorMesh" type="MeshInstance" parent="MeshPivot"]
+transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 2.01, 0, 0, -0.5 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 1 )
+
+[node name="Follower" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+visible = false
+
+[node name="CursorMesh" type="MeshInstance" parent="Follower"]
+transform = Transform( 1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0.5, 0 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../..")
+material/0 = ExtResource( 1 )
