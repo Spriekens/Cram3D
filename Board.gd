@@ -1,12 +1,7 @@
 extends Spatial
 
-#const BLUE_BLOCK = preload("res://BlueBlock.tscn")
-#const RED_BLOCK = preload("res://RedBlock.tscn")
 const CRAM_BLOCK = preload("res://CramBlock.tscn")
 
-#const BOARDS_FILE_PATH = "user://known_boards.txt"
-
-const BOUNDS_OFFSET = 0.1
 const CAMERA_SPEED = 1
 const CAMERA_OFFSET = 2
 const CAMERA_MIN_ROTATION = -89
@@ -29,11 +24,8 @@ var empty_spaces = width * length * height
 var game_over = true
 var nimber_calculated = false
 var nimber_label_updated = false
-var nimber_thread: Thread
-var ai_thread: Thread
 var ai_play = false
 var ai_turn = false
-var ai_calculating = false
 
 var known_boards = {}
 
@@ -60,18 +52,11 @@ func _process(_delta: float) -> void:
 func ai_play() -> void:
 	# AI's turn
 	if ai_turn:
-		if not ai_calculating:
-			ai_calculating = true
-			ai_thread = Thread.new()
-			ai_thread.start(self, "find_best_move", get_impartial_board(board_array))
-		else:
-			if ai_thread != null and ai_thread.is_active() and not ai_thread.is_alive():
-				var move = ai_thread.wait_to_finish()
-				var pos1 = Vector3(move[0][1], move[0][0], move[0][2])
-				var pos2 = Vector3(move[1][1], move[1][0], move[1][2])
-				place_blocks_at(pos1, pos2, player_color)
-				toggle_player_ai()
-				ai_calculating = false
+		var move = find_best_move(get_impartial_board((board_array)))
+		var pos1 = Vector3(move[0][1], move[0][0], move[0][2])
+		var pos2 = Vector3(move[1][1], move[1][0], move[1][2])
+		place_blocks_at(pos1, pos2, player_color)
+		toggle_player_ai()
 	# Player's turn
 	else:
 		# Return to main menu
@@ -99,7 +84,7 @@ func ai_play() -> void:
 			cursor.rotate_cursor()
 		
 		# Block placement
-		if Input.is_action_just_pressed("place_block") and (nimber_thread == null or not nimber_thread.is_alive()):
+		if Input.is_action_just_pressed("place_block"):
 			if cursor.valid_block_placement():
 				place_blocks_at(cursor.global_transform.origin, cursor.follower.global_transform.origin, player_color)
 				
@@ -163,19 +148,16 @@ func toggle_player_ai() -> void:
 
 func human_play() -> void:
 	# Return to main menu
-	if Input.is_action_just_pressed("ui_cancel") and (nimber_thread == null or not nimber_thread.is_active()):
+	if Input.is_action_just_pressed("ui_cancel"):
 		return_to_main_menu()
 	
 	if not game_over:
 		
 		# Nimber calculation
-		if nimber_calculated and not nimber_label_updated and not nimber_thread.is_alive():
-			gui.update_nimber_label(nimber_thread.wait_to_finish())
-			nimber_label_updated = true
-		if not nimber_calculated and Input.is_action_just_pressed("nimber") and (nimber_thread == null or not nimber_thread.is_active()):
-			nimber_thread = Thread.new()
-			nimber_thread.start(self, "get_nimber", get_impartial_board(board_array))
+		if gui.nimber_label.text == "Value: Calculating...":
+			gui.update_nimber_label(get_nimber(get_impartial_board(board_array)))
 			nimber_calculated = true
+		if not nimber_calculated and Input.is_action_just_pressed("nimber"):
 			gui.update_nimber_label(-2)
 		
 		# Cursor movement
@@ -199,7 +181,7 @@ func human_play() -> void:
 			cursor.rotate_cursor()
 		
 		# Block placement
-		if Input.is_action_just_pressed("place_block") and (nimber_thread == null or not nimber_thread.is_alive()):
+		if Input.is_action_just_pressed("place_block"):
 			if cursor.valid_block_placement():
 				place_blocks_at(cursor.global_transform.origin, cursor.follower.global_transform.origin, player_color)
 				

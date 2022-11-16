@@ -1,37 +1,28 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Board.gd" type="Script" id=1]
 [ext_resource path="res://Cursor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Themes/StandardTheme.tres" type="Theme" id=3]
 [ext_resource path="res://MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://GUI.gd" type="Script" id=5]
-[ext_resource path="res://Themes/PS4.png" type="Texture" id=6]
 [ext_resource path="res://lythwood_terrace_1k.hdr" type="Texture" id=7]
-[ext_resource path="res://Models/BoardCage.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Themes/gdb-keyboard-2.png" type="Texture" id=8]
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 8 )
+region = Rect2( 64, 161, 48, 31 )
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 48, 64, 16, 16 )
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 8 )
+region = Rect2( 304, 193, 48, 31 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 6 )
-region = Rect2( 32, 48, 16, 16 )
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 8 )
+region = Rect2( 100, 209, 29, 15 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
-region = Rect2( 32, 64, 16, 16 )
-
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 1, 1, 1 )
-
-[sub_resource type="SpatialMaterial" id=3]
-flags_transparent = true
-flags_unshaded = true
-albedo_color = Color( 1, 1, 1, 0.231373 )
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 8 )
+region = Rect2( 112, 161, 16, 15 )
 
 [sub_resource type="PanoramaSky" id=8]
 panorama = ExtResource( 7 )
@@ -189,7 +180,7 @@ margin_bottom = 264.0
 
 [node name="TurnValueVBox" type="VBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 468.0
-margin_bottom = 214.0
+margin_bottom = 184.0
 size_flags_vertical = 3
 
 [node name="TurnLabel" type="Label" parent="GUI/VBoxContainer/TurnValueVBox"]
@@ -206,81 +197,83 @@ theme = ExtResource( 3 )
 text = "Value: [N]"
 
 [node name="ControlsHBox" type="HBoxContainer" parent="GUI/VBoxContainer"]
-margin_top = 218.0
+margin_top = 188.0
 margin_right = 468.0
 margin_bottom = 258.0
 
 [node name="MoveStickVBox" type="VBoxContainer" parent="GUI/VBoxContainer/ControlsHBox"]
 margin_right = 348.0
-margin_bottom = 40.0
+margin_bottom = 70.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="DPadHBox" type="HBoxContainer" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox"]
 margin_right = 348.0
-margin_bottom = 16.0
+margin_bottom = 31.0
 
 [node name="DPadTexture" type="TextureRect" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox/DPadHBox"]
-margin_right = 16.0
-margin_bottom = 16.0
-texture = SubResource( 4 )
+margin_right = 48.0
+margin_bottom = 31.0
+texture = SubResource( 10 )
 stretch_mode = 6
 
 [node name="DPadLabel" type="Label" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox/DPadHBox"]
-margin_left = 20.0
-margin_right = 84.0
-margin_bottom = 16.0
+margin_left = 52.0
+margin_top = 7.0
+margin_right = 116.0
+margin_bottom = 23.0
 theme = ExtResource( 3 )
 text = "Move"
 
 [node name="StickHBox" type="HBoxContainer" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox"]
-margin_top = 24.0
+margin_top = 39.0
 margin_right = 348.0
-margin_bottom = 40.0
+margin_bottom = 70.0
 
 [node name="StickTexture" type="TextureRect" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox/StickHBox"]
-margin_right = 16.0
-margin_bottom = 16.0
-texture = SubResource( 7 )
+margin_right = 48.0
+margin_bottom = 31.0
+texture = SubResource( 11 )
 
 [node name="StickLabel" type="Label" parent="GUI/VBoxContainer/ControlsHBox/MoveStickVBox/StickHBox"]
-margin_left = 20.0
-margin_right = 116.0
-margin_bottom = 16.0
+margin_left = 52.0
+margin_top = 7.0
+margin_right = 148.0
+margin_bottom = 23.0
 theme = ExtResource( 3 )
 text = "Camera"
 
 [node name="ButtonsVBox" type="VBoxContainer" parent="GUI/VBoxContainer/ControlsHBox"]
 margin_left = 352.0
 margin_right = 468.0
-margin_bottom = 40.0
-custom_constants/separation = 8
+margin_bottom = 70.0
+custom_constants/separation = 30
 
 [node name="PlaceHBox" type="HBoxContainer" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox"]
 margin_right = 116.0
 margin_bottom = 16.0
 
 [node name="PlaceTexture" type="TextureRect" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox/PlaceHBox"]
-margin_right = 16.0
+margin_right = 29.0
 margin_bottom = 16.0
-texture = SubResource( 5 )
+texture = SubResource( 12 )
 
 [node name="PlaceLebel" type="Label" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox/PlaceHBox"]
-margin_left = 20.0
-margin_right = 100.0
+margin_left = 33.0
+margin_right = 113.0
 margin_bottom = 16.0
 theme = ExtResource( 3 )
 text = "Place"
 
 [node name="RotateHBox" type="HBoxContainer" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox"]
-margin_top = 24.0
+margin_top = 46.0
 margin_right = 116.0
-margin_bottom = 40.0
+margin_bottom = 62.0
 
 [node name="RotateTexture" type="TextureRect" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox/RotateHBox"]
 margin_right = 16.0
 margin_bottom = 16.0
-texture = SubResource( 6 )
+texture = SubResource( 13 )
 
 [node name="RotateLabel" type="Label" parent="GUI/VBoxContainer/ControlsHBox/ButtonsVBox/RotateHBox"]
 margin_left = 20.0
@@ -296,16 +289,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="BoardCage" parent="Board/BoardBounds" instance=ExtResource( 8 )]
-visible = false
-
-[node name="BoundsMesh" type="MeshInstance" parent="Board/BoardBounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-visible = false
-mesh = SubResource( 2 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 3 )
 
 [node name="Blocks" type="Spatial" parent="Board"]
 
