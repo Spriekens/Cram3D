@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Board.gd" type="Script" id=1]
 [ext_resource path="res://Cursor.tscn" type="PackedScene" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://GUI.gd" type="Script" id=5]
 [ext_resource path="res://lythwood_terrace_1k.hdr" type="Texture" id=7]
 [ext_resource path="res://Themes/gdb-keyboard-2.png" type="Texture" id=8]
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 8 )
+region = Rect2( 32, 129, 16, 15 )
 
 [sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 8 )
@@ -49,9 +53,9 @@ anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/MainMenuCenterContainer"]
 margin_left = 73.0
-margin_top = 19.0
+margin_top = 36.0
 margin_right = 407.0
-margin_bottom = 251.0
+margin_bottom = 234.0
 custom_constants/separation = 12
 
 [node name="LogoLabel" type="Label" parent="MainMenu/MainMenuCenterContainer/VBoxContainer"]
@@ -153,6 +157,7 @@ toggle_mode = true
 text = "AI: 1st"
 
 [node name="ExitButton" type="Button" parent="MainMenu/MainMenuCenterContainer/VBoxContainer"]
+visible = false
 margin_top = 210.0
 margin_right = 334.0
 margin_bottom = 232.0
@@ -167,8 +172,8 @@ custom_constants/margin_top = 6
 custom_constants/margin_left = 6
 custom_constants/margin_bottom = 6
 script = ExtResource( 5 )
-turn_label = NodePath("VBoxContainer/TurnValueVBox/TurnLabel")
-nimber_label = NodePath("VBoxContainer/TurnValueVBox/NimberLabel")
+turn_label = NodePath("VBoxContainer/HBoxContainer/TurnValueVBox/TurnLabel")
+nimber_label = NodePath("VBoxContainer/HBoxContainer/TurnValueVBox/NimberLabel")
 BLUE_COLOR = Color( 0.1274, 0.55783, 0.91, 1 )
 RED_COLOR = Color( 0.8, 0.223529, 0.223529, 1 )
 
@@ -178,23 +183,47 @@ margin_top = 6.0
 margin_right = 474.0
 margin_bottom = 264.0
 
-[node name="TurnValueVBox" type="VBoxContainer" parent="GUI/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_right = 468.0
 margin_bottom = 184.0
 size_flags_vertical = 3
 
-[node name="TurnLabel" type="Label" parent="GUI/VBoxContainer/TurnValueVBox"]
-margin_right = 468.0
+[node name="TurnValueVBox" type="VBoxContainer" parent="GUI/VBoxContainer/HBoxContainer"]
+margin_right = 300.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TurnLabel" type="Label" parent="GUI/VBoxContainer/HBoxContainer/TurnValueVBox"]
+margin_right = 300.0
 margin_bottom = 16.0
 theme = ExtResource( 3 )
 text = "Blue's turn"
 
-[node name="NimberLabel" type="Label" parent="GUI/VBoxContainer/TurnValueVBox"]
+[node name="NimberLabel" type="Label" parent="GUI/VBoxContainer/HBoxContainer/TurnValueVBox"]
 margin_top = 20.0
-margin_right = 468.0
+margin_right = 300.0
 margin_bottom = 36.0
 theme = ExtResource( 3 )
 text = "Value: [N]"
+
+[node name="EscHBox" type="HBoxContainer" parent="GUI/VBoxContainer/HBoxContainer"]
+margin_left = 304.0
+margin_right = 468.0
+margin_bottom = 184.0
+
+[node name="EscTexture" type="TextureRect" parent="GUI/VBoxContainer/HBoxContainer/EscHBox"]
+margin_right = 16.0
+margin_bottom = 184.0
+texture = SubResource( 14 )
+
+[node name="EscLabel" type="Label" parent="GUI/VBoxContainer/HBoxContainer/EscHBox"]
+margin_left = 20.0
+margin_right = 164.0
+margin_bottom = 16.0
+size_flags_vertical = 0
+theme = ExtResource( 3 )
+text = "Main Menu"
 
 [node name="ControlsHBox" type="HBoxContainer" parent="GUI/VBoxContainer"]
 margin_top = 188.0
